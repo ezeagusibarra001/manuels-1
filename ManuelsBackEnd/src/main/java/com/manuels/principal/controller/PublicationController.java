@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,19 +28,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class PublicationController {
-    //@RequestParam recupera por parameter
+
     @Autowired
     private PublicationService publicationService;
     
     @Autowired
     private ImageService imageService;
     
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Publication> create(@RequestBody Publication publication) throws NotFoundException{
         
         if(publication.getImage() != null){
             
-           Image image = imageService.find(publication.getImage().getIdImage());
+           Image image = imageService.create(publication.getImage());
            publication.setImage(image);
         }
 
@@ -63,12 +65,14 @@ public class PublicationController {
         return ResponseEntity.ok(publication);
     }
     
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Publication> update(@RequestBody Publication publication,
            @PathVariable(value = "id") Long idPublication){
         return ResponseEntity.status(HttpStatus.CREATED).body(publicationService.update(publication));
     }
     
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Publication> delete(@PathVariable(value = "id") Long idPublication) {
 

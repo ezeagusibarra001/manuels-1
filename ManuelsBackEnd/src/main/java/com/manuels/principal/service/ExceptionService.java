@@ -1,11 +1,7 @@
 package com.manuels.principal.service;
 
-import com.manuels.principal.exceptions.MalformedHeaderException;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping(ExceptionService.EXCEPTIONS)
 public class ExceptionService {

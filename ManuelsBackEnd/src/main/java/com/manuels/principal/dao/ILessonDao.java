@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface ILessonDao extends JpaRepository<Lesson, Long> {
-    //@Query(value = "SELECT * FROM USERS WHERE EMAIL_ADDRESS = ?1", nativeQuery = true)
     @Query(value = "SELECT *FROM lesson WHERE title LIKE %?1%", nativeQuery = true)
     public List<Lesson> findByName(String title);
 }

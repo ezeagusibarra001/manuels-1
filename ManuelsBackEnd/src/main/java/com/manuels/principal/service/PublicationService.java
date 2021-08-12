@@ -6,21 +6,29 @@ import com.manuels.principal.models.Publication;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PublicationService implements IPublicationService {
-
+    
+    @Autowired
+    private ImageService imageService;
+    
     @Autowired
     private IPublicationDao publicationDao;
     
     @Override
     public List<Publication> listPublications() {
-        return publicationDao.findAll();
-    }
+        List<Publication> publications = publicationDao.findAll();
 
+        return publications;
+    }
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public Publication create(Publication publication) {
+        
         return publicationDao.save(publication);
     }
 

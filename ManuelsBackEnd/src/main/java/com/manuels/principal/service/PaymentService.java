@@ -3,7 +3,6 @@ package com.manuels.principal.service;
 import com.manuels.principal.dao.IPaymentDao;
 import com.manuels.principal.models.Payment;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

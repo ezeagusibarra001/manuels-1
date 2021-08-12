@@ -22,7 +22,14 @@ public class ImageService implements IImageService {
 
     @Override
     public List<Image> listImages() {
-        return imageDao.findAll();
+        
+        List<Image> images = imageDao.findAll();
+        
+        images.forEach(img -> {   
+            byte[] bytes = decompressBytes(img.getBytes());
+            img.setBytes(bytes);
+        });
+        return images;
     }
 
     @Override
@@ -48,9 +55,25 @@ public class ImageService implements IImageService {
 
     @Override
     public Image find(Long idImage) {
-        return imageDao.findById(idImage).orElse(null);
-    }
+        Image image = imageDao.findById(idImage).orElse(null);
 
+        if(image!=null)
+            image.setBytes(decompressBytes(image.getBytes()));
+        
+        return image;
+    }
+    
+    @Override
+    public List<Image> findByName(String imageName) {
+        
+        List<Image> images = imageDao.findByName(imageName);
+        
+        for(Image img : images){
+            img.setBytes(decompressBytes(img.getBytes()));
+        }
+        return images;
+    }
+    
     // compress the image bytes before storing it in the database
     public byte[] compressBytes(byte[] data) {
 
@@ -58,8 +81,8 @@ public class ImageService implements IImageService {
         deflater.setInput(data);
         deflater.finish();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[3100];
-        
+        byte[] buffer = new byte[4096];//3mb
+
         while (!deflater.finished()) {
             
             int count = deflater.deflate(buffer);
@@ -78,13 +101,14 @@ public class ImageService implements IImageService {
     public byte[] decompressBytes(byte[] data) {
         
         Inflater inflater = new Inflater();
-        inflater.setInput(data);
+        inflater.setInput(data, 0, data.length);
+        
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[3100];
+        byte[] buffer = new byte[4096];//3mb
         
         try {
             while (!inflater.finished()) {
-                
+                //bucle infinito
                 int count = inflater.inflate(buffer);
                 outputStream.write(buffer, 0, count);
             }
@@ -94,11 +118,5 @@ public class ImageService implements IImageService {
         }
         
         return outputStream.toByteArray();
-    }
-    
-    @Override
-    public List<Image> findByName(String imageName) {
-        
-        return imageDao.findByName(imageName);
     }
 }

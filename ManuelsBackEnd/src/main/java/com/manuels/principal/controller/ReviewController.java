@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,13 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class ReviewController {
-    //@RequestParam recupera por parameter
+
     @Autowired
     private ReviewService reviewService;
     
     @PostMapping
     public ResponseEntity<Review> create(@RequestBody Review review){
-        
         return ResponseEntity.status(HttpStatus.CREATED).body(reviewService.create(review));
     }
     
@@ -47,24 +46,25 @@ public class ReviewController {
         Review review = reviewService.find(idReview);
 
         if (review == null) {
-            
             throw new NotFoundException("Not found review");
-            //return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(review);
     }
     
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/accept/{id}")
     public ResponseEntity<Review> setTrue(@PathVariable(value = "id") Long idReview){
         return ResponseEntity.status(HttpStatus.CREATED).body(reviewService.setTrue(idReview));
     }
     
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Review> update(@RequestBody Review review,
            @PathVariable(value = "id") Long idReview){
         return ResponseEntity.status(HttpStatus.CREATED).body(reviewService.update(review));
     }
     
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Review> delete(@PathVariable(value = "id") Long idReview) {
 

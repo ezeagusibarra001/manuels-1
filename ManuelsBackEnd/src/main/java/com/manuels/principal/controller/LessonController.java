@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,8 @@ public class LessonController {
 
     @Autowired
     private DateService dateService;
-
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Lesson> create(@RequestBody Lesson lesson){
 
@@ -40,13 +42,11 @@ public class LessonController {
         DateC date;
 
         for (DateC d : lesson.getDates()) {
-
             date = dateService.create(d);
             dates.add(date);
         }
 
         lesson.setDates(dates);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(lessonService.create(lesson));
     }
 
@@ -62,9 +62,7 @@ public class LessonController {
         Lesson lesson = lessonService.findWithId(idLesson);
 
         if (lesson == null) {
-            
             throw new NotFoundException("Not found lesson");
-            //return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(lesson);
     }
@@ -79,7 +77,8 @@ public class LessonController {
         }
         return ResponseEntity.ok(lessons);
     }
-
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Lesson> delete(@PathVariable(value = "id") Long idLesson) throws NotFoundException{
 
@@ -92,12 +91,12 @@ public class LessonController {
         lessonService.delete(lesson);
         return ResponseEntity.ok().build();
     }
-
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Lesson> update(@RequestBody Lesson lesson) {
 
         for (DateC d : lesson.getDates()) {
-
             dateService.update(d);
         }
 
