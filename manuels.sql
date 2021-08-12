@@ -37,7 +37,7 @@ CREATE TABLE publication(id_publication INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                          subtitle2 VARCHAR(500),
                          id_img INT NULL,
                          FOREIGN KEY (id_img) REFERENCES image (id_image) ON DELETE CASCADE);
-
+					
 CREATE TABLE user(id_user INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 				  username VARCHAR(40) NOT NULL,
                   password VARCHAR(164) NOT NULL,
@@ -53,5 +53,9 @@ CREATE TABLE payment(id_payment INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                   
                   alter table review add column validate BOOLEAN;
 				  alter table lesson add column link VARCHAR(150);
+<<<<<<< Updated upstream
                   alter table lesson add column link1 VARCHAR(150);
+=======
+					alter table lesson add column link1 VARCHAR(150);
+>>>>>>> Stashed changes
                   insert into user (username, password, enabled, roles) values ("manuels", "$2y$12$TnkCvHO5hoMI0lGo4E784e.tkNDXyV8j6sataWlvuMZGtLOl/xjeO", 1, "ROLE_ADMIN");
