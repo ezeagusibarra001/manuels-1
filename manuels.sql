@@ -56,4 +56,4 @@ CREATE TABLE payment(id_payment INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 				  alter table lesson add column link VARCHAR(150);
                   alter table lesson add column link1 VARCHAR(150);
 
-                  insert into user (username, password, enabled, roles) values ("manuels", "$2y$12$TnkCvHO5hoMI0lGo4E784e.tkNDXyV8j6sataWlvuMZGtLOl/xjeO", 1, "ROLE_ADMIN");
+insert into user (username, password, enabled, roles) values ("manuels", "$2y$12$TnkCvHO5hoMI0lGo4E784e.tkNDXyV8j6sataWlvuMZGtLOl/xjeO", 1, "ROLE_ADMIN");
