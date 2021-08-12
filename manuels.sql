@@ -37,7 +37,7 @@ CREATE TABLE publication(id_publication INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                          subtitle2 VARCHAR(500),
                          id_img INT NULL,
                          FOREIGN KEY (id_img) REFERENCES image (id_image) ON DELETE CASCADE);
-					
+                         
 CREATE TABLE user(id_user INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 				  username VARCHAR(40) NOT NULL,
                   password VARCHAR(164) NOT NULL,
