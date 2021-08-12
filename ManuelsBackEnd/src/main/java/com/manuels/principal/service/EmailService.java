@@ -18,7 +18,7 @@ public class EmailService {
         mailMessage.setFrom(from);
         mailMessage.setTo(to);
         mailMessage.setSubject(subject);
-        mailMessage.setText(body);
+        mailMessage.setText("BIENVENIDO A CURSOS MANUELS");
         
         javaMailSender.send(mailMessage);
     }

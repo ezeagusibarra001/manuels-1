@@ -52,10 +52,4 @@ public class PaymentService implements IPaymentService{
     public List<Payment> findByName(String name) {
         return paymentDao.findByName(name);
     }
-
-    @Override
-    public Payment find(Payment payment) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

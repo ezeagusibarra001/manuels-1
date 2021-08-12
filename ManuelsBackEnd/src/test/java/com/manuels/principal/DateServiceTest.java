@@ -111,9 +111,4 @@ public class DateServiceTest {
         
         verify(dateMock, times(2)).delete(date1);
     }
-    
-    @Test
-    public void updateDateTest(){
-        
-    }
 }

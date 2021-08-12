@@ -54,7 +54,6 @@ public class ReviewServiceTest {
         reviews.add(review2);
         review1.setValidate(true);
 
-        
         given(reviewMock.findAll()).willReturn(reviews);
         
         List<Review> expected = reviewService.listReviews();
@@ -72,7 +71,6 @@ public class ReviewServiceTest {
         review1.setName("review lalal");
         review1.setValidate(false);
 
-        
         given(reviewMock.save(review1)).willAnswer
         (invocation -> invocation.getArgument(0));
         
@@ -115,8 +113,17 @@ public class ReviewServiceTest {
         verify(reviewMock, times(2)).delete(review1);
     }
     
-    @Test
-    public void updateReviewTest(){
+    public void setTrueTest(){
         
+        Review review1 = new Review();
+
+        review1.setCommentary("comentarioooooooo");
+        review1.setIdReview(1L);
+        review1.setName("review lalal");
+        review1.setValidate(false);
+
+        Review reviewTrue = reviewService.setTrue(review1.getIdReview());
+        
+        assertEquals(false, reviewTrue.getValidate());
     }
 }

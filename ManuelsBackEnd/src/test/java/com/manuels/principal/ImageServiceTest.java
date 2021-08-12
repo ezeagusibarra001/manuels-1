@@ -43,17 +43,19 @@ public class ImageServiceTest {
         
         List<Image> images = new ArrayList<>();
         
-        Date date = new Date(System.currentTimeMillis());
-        
         image1.setIdImage(1L);
         image1.setName("hola.jpg");
         image1.setType("image/jpeg");
-        //image1.setBytes(bytes);
+        
+        String datos = "lala";
+        byte[]data = datos.getBytes();
+        image1.setBytes(data);
         
         image2.setIdImage(2L);
         image2.setName("lala.png");
         image2.setType("image/png");
-        //image2.setBytes(bytes);
+        
+        image2.setBytes(data);
         
         images.add(image1);
         images.add(image2);
@@ -73,7 +75,10 @@ public class ImageServiceTest {
         image1.setIdImage(1L);
         image1.setName("hola.jpg");
         image1.setType("image/jpeg");
-        //image1.setBytes(bytes);
+        
+        String datos = "la";
+        byte[]data2 = datos.getBytes();
+        image1.setBytes(imageService.compressBytes(data2));
         
         given(imageMock.save(image1)).willAnswer
         (invocation -> invocation.getArgument(0));
@@ -93,10 +98,35 @@ public class ImageServiceTest {
         image1.setIdImage(1L);
         image1.setName("hola.jpg");
         image1.setType("image/jpeg");
-        //image1.setBytes(bytes);
+        
+        String datos = "lala";
+        byte[]data = datos.getBytes();
+        image1.setBytes(data);
         
         given(imageMock.findById(image1.getIdImage()))
                 .willReturn(Optional.of(image1));
+
+        verify(imageMock, never()).save(any(Image.class));
+    }
+    
+    @Test
+    public void findImageByNameTest(){
+        
+        Image image1 = new Image();
+
+        image1.setIdImage(1L);
+        image1.setName("hola.jpg");
+        image1.setType("image/jpeg");
+        
+        String datos = "lala";
+        byte[]data = datos.getBytes();
+        image1.setBytes(data);
+        
+        List<Image> images = new ArrayList();
+        images.add(image1);
+        
+        given(imageMock.findByName(image1.getName()))
+                .willReturn(List.of(image1));
 
         verify(imageMock, never()).save(any(Image.class));
     }
@@ -109,16 +139,14 @@ public class ImageServiceTest {
         image1.setIdImage(1L);
         image1.setName("hola.jpg");
         image1.setType("image/jpeg");
-        //image1.setBytes(bytes);
+        
+        String datos = "lala";
+        byte[]data = datos.getBytes();
+        image1.setBytes(data);
         
         imageService.delete(image1);
         imageService.delete(image1);
         
         verify(imageMock, times(2)).delete(image1);
-    }
-    
-    @Test
-    public void updateDateTest(){
-        
     }
 }

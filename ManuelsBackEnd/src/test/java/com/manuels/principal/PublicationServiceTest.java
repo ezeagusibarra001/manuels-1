@@ -1,7 +1,9 @@
 package com.manuels.principal;
 
+import com.manuels.principal.dao.IImageDao;
 import com.manuels.principal.dao.IPublicationDao;
 import com.manuels.principal.service.PublicationService;
+import com.manuels.principal.service.ImageService;
 import com.manuels.principal.models.Publication;
 import com.manuels.principal.models.Image;
 import java.util.ArrayList;
@@ -31,8 +33,14 @@ public class PublicationServiceTest {
     @MockBean
     private IPublicationDao publicationMock;
     
+    @MockBean
+    private IImageDao imageMock;
+    
     @InjectMocks
     private PublicationService publicationService;
+    
+    @InjectMocks
+    private ImageService imageService;
     
     @Test
     public void listPublicationsTest(){
@@ -42,19 +50,21 @@ public class PublicationServiceTest {
         
         List<Publication> publications = new ArrayList<>();
         
-        Image image = new Image();
+        Image aux = new Image();
         
-        image.setIdImage(1L);
-        image.setName("hola.jpg");
-        image.setType("image/jpeg");
-        //image.setBytes(bytes);
+        aux.setIdImage(1L);
+        aux.setName("hola.jpg");
+        aux.setType("image/jpeg");
+        String string = "lala";
+        byte[] data = string.getBytes();
+        aux.setBytes(data);
         
         publication1.setDescription("djdj djkjdk");
         publication1.setDescription2("djdj djkjdk");
         publication1.setSubtitle("djdj djkjdk");
         publication1.setIdPublication(1L);
         publication1.setTitle("llalal");
-        publication1.setImage(image);
+        publication1.setImage(aux);
         
         publication2.setDescription("skk ksks");
         publication1.setDescription2("djdj djkjdk");
@@ -62,7 +72,7 @@ public class PublicationServiceTest {
         publication1.setSubtitle("djdj djkjdk");
         publication2.setIdPublication(2L);
         publication2.setTitle("lals fkfk");
-        publication2.setImage(image);
+        publication2.setImage(aux);
         
         publications.add(publication1);
         publications.add(publication2);
@@ -80,12 +90,15 @@ public class PublicationServiceTest {
         Publication publication1 = new Publication();
         Publication publication2 = new Publication();
         
-        Image image = new Image();
+        Image aux = new Image();
         
-        image.setIdImage(1L);
-        image.setName("hola.jpg");
-        image.setType("image/jpeg");
-        //image.setBytes(bytes);
+        aux.setName("hola.jpg");
+        aux.setType("image/jpeg");
+        String string = "lala";
+        byte[] data = string.getBytes();
+        aux.setBytes(data);
+        
+        Image image = imageService.create(aux);
         
         publication1.setDescription("djdj djkjdk");
         publication1.setDescription3("djdj djkjdk");
@@ -110,19 +123,21 @@ public class PublicationServiceTest {
         Publication publication1 = new Publication();
         Publication publication2 = new Publication();
         
-        Image image = new Image();
+        Image aux = new Image();
         
-        image.setIdImage(1L);
-        image.setName("hola.jpg");
-        image.setType("image/jpeg");
-        //image.setBytes(bytes);
-        
+        aux.setIdImage(1L);
+        aux.setName("hola.jpg");
+        aux.setType("image/jpeg");
+        String string = "lala";
+        byte[] data = string.getBytes();
+        aux.setBytes(data);
+
         publication1.setDescription("djdj djkjdk");
         publication1.setDescription2("djdj djkjdk");
         publication1.setSubtitle("djdj djkjdk");
         publication1.setIdPublication(1L);
         publication1.setTitle("llalal");
-        publication1.setImage(image);
+        publication1.setImage(aux);
         
         given(publicationMock.findById(publication1.getIdPublication()))
                 .willReturn(Optional.of(publication1));
@@ -136,28 +151,25 @@ public class PublicationServiceTest {
         Publication publication1 = new Publication();
         Publication publication2 = new Publication();
         
-        Image image = new Image();
+        Image aux = new Image();
         
-        image.setIdImage(1L);
-        image.setName("hola.jpg");
-        image.setType("image/jpeg");
-        //image.setBytes(bytes);
+        aux.setIdImage(1L);
+        aux.setName("hola.jpg");
+        aux.setType("image/jpeg");
+        String string = "lala";
+        byte[] data = string.getBytes();
+        aux.setBytes(data);
         
         publication1.setDescription("djdj djkjdk");
         publication1.setDescription2("djdj djkjdk");
         publication1.setSubtitle("djdj djkjdk");
         publication1.setIdPublication(1L);
         publication1.setTitle("llalal");
-        publication1.setImage(image);
+        publication1.setImage(aux);
         
         publicationService.delete(publication1);
         publicationService.delete(publication1);
         
         verify(publicationMock, times(2)).delete(publication1);
-    }
-    
-    @Test
-    public void updatePublicationTest(){
-        
     }
 }

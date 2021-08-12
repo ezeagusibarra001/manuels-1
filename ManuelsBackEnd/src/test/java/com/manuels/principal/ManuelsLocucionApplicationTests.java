@@ -9,5 +9,4 @@ class ManuelsLocucionApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

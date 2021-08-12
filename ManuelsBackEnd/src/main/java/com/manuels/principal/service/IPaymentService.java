@@ -12,9 +12,7 @@ public interface IPaymentService {
     public void delete(Payment payment);
     
     public Payment update(Payment payment);
-    
-    public Payment find(Payment payment);
-    
+
     public Payment findWithId(Long idPayment);
     
     public List<Payment> findByName(String name); 
