@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +30,17 @@ public class ImageController {
     @Autowired
     private ImageService imageService;
     
-     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    /*@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Image> create(@RequestBody MultipartFile image)
+                                             throws IOException{
+        Image img = new Image(image.getOriginalFilename(),
+                              image.getContentType(),
+                              imageService.compressBytes(image.getBytes()));
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.create(img));
+    }*/
+    @RequestMapping(method = RequestMethod.POST,
+    consumes = {"multipart/form-data"})
     public ResponseEntity<Image> create(@RequestBody MultipartFile image)
                                              throws IOException{
         Image img = new Image(image.getOriginalFilename(),
