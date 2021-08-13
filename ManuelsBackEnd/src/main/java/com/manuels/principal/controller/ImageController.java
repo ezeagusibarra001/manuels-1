@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -28,7 +29,7 @@ public class ImageController {
     @Autowired
     private ImageService imageService;
     
-    @PostMapping
+     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Image> create(@RequestBody MultipartFile image)
                                              throws IOException{
         Image img = new Image(image.getOriginalFilename(),
