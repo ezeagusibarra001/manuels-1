@@ -30,17 +30,7 @@ public class ImageController {
     @Autowired
     private ImageService imageService;
     
-    /*@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Image> create(@RequestBody MultipartFile image)
-                                             throws IOException{
-        Image img = new Image(image.getOriginalFilename(),
-                              image.getContentType(),
-                              imageService.compressBytes(image.getBytes()));
-        
-        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.create(img));
-    }*/
-    @RequestMapping(method = RequestMethod.POST,
-    consumes = {"multipart/form-data"})
+    @PostMapping
     public ResponseEntity<Image> create(@RequestBody MultipartFile image)
                                              throws IOException{
         Image img = new Image(image.getOriginalFilename(),
@@ -49,7 +39,7 @@ public class ImageController {
         
         return ResponseEntity.status(HttpStatus.CREATED).body(imageService.create(img));
     }
-    
+
     @GetMapping
     public List<Image> read() throws IOException {
         
