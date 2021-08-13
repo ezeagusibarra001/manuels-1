@@ -39,9 +39,7 @@ public class PublicationService implements IPublicationService {
            Image image = imageService.create(publication.getImage());
            publication.setImage(image);
         }
-        publication.setIdPublication(2L);
-        publication.setDescription("LALA");
-        publication.setTitle("LALA");
+
         return publicationDao.save(publication);
     }
 
