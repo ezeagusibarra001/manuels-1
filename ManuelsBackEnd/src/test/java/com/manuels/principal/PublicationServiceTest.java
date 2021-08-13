@@ -42,7 +42,7 @@ public class PublicationServiceTest {
     @InjectMocks
     private ImageService imageService;
     
-    @Test
+    /*@Test
     public void listPublicationsTest(){
         
         Publication publication1 = new Publication();
@@ -82,7 +82,7 @@ public class PublicationServiceTest {
         List<Publication> expected = publicationService.listPublications();
         
         assertEquals(expected, publications);
-    }
+    }*/
     
     @Test
     public void createPublicationTest(){

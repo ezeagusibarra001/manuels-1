@@ -22,6 +22,10 @@ CREATE TABLE review(id_review INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 				    name VARCHAR(20) NOT NULL,
                     commentary VARCHAR(400) NOT NULL);
 
+drop table publication;
+drop table payment;
+drop table image;
+
 CREATE TABLE image(id_image INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 				   name VARCHAR(150),
 				   type VARCHAR(30),
@@ -37,13 +41,6 @@ CREATE TABLE publication(id_publication INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                          subtitle2 VARCHAR(500),
                          id_img INT NULL,
                          FOREIGN KEY (id_img) REFERENCES image (id_image) ON DELETE CASCADE);
-                         
-CREATE TABLE user(id_user INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-				  username VARCHAR(40) NOT NULL,
-                  password VARCHAR(164) NOT NULL,
-                  enabled BOOLEAN,
-                  roles VARCHAR(100) NOT NULL);
-
 
 CREATE TABLE payment(id_payment INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 					  name VARCHAR(40),
@@ -51,7 +48,13 @@ CREATE TABLE payment(id_payment INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                       payment boolean,
                       voucher INT NOT NULL,
                       FOREIGN KEY (voucher) REFERENCES image (id_image) ON DELETE CASCADE);
-                  
+                         
+CREATE TABLE user(id_user INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+				  username VARCHAR(40) NOT NULL,
+                  password VARCHAR(164) NOT NULL,
+                  enabled BOOLEAN,
+                  roles VARCHAR(100) NOT NULL);
+     
                   alter table review add column validate BOOLEAN;
 				  alter table lesson add column link VARCHAR(150);
                   alter table lesson add column link1 VARCHAR(150);
