@@ -32,8 +32,13 @@ public class ImageController {
     
     @PostMapping
     public ResponseEntity<Image> create(@RequestBody MultipartFile image)
-                                             throws IOException{
-        Image img = new Image(image.getOriginalFilename(),
+                                             throws IOException, Exception{
+        System.out.println(image.getBytes());
+        
+        if(image == null)
+            throw new Exception("Imagen nula");
+            
+            Image img = new Image(image.getOriginalFilename(),
                               image.getContentType(),
                               imageService.compressBytes(image.getBytes()));
         

@@ -18,11 +18,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,16 +41,15 @@ public class PublicationController {
     
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<Publication> create(@RequestBody Publication publication,
-                                              @RequestBody MultipartFile image) throws NotFoundException, IOException{
+    public ResponseEntity<Publication> create(@ModelAttribute Publication publication) throws NotFoundException, IOException{
         
-        System.out.println("IMAGEN DEL FRONT ---------"+image);
+        //System.out.println("IMAGEN DEL FRONT ---------"+publication.getFile());
         
-        Image img = new Image(image.getOriginalFilename(),
-                              image.getContentType(),
-                              imageService.compressBytes(image.getBytes()));
+        Image img = new Image(publication.getFile().getOriginalFilename(),
+                              publication.getFile().getContentType(),
+                              imageService.compressBytes(publication.getFile().getBytes()));
         
-        System.out.println("IMAGEN CONVERTIDA ---------"+img);
+        //System.out.println("IMAGEN CONVERTIDA ---------"+img);
         
         publication.setImage(img);
         

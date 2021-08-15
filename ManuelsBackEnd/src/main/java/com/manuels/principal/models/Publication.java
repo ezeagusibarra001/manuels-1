@@ -13,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Entity
@@ -48,6 +50,9 @@ public class Publication implements Serializable{
     
     @Column(name = "subtitle2")
     private String subtitle2;
+    
+    @Transient
+    private MultipartFile file;
     
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "id_img", nullable = true)
