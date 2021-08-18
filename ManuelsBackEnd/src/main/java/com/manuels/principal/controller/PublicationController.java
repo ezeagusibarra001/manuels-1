@@ -43,16 +43,14 @@ public class PublicationController {
     @PostMapping
     public ResponseEntity<Publication> create(@ModelAttribute Publication publication) throws NotFoundException, IOException{
         
-        //System.out.println("IMAGEN DEL FRONT ---------"+publication.getFile());
-        
-        Image img = new Image(publication.getFile().getOriginalFilename(),
+        if(publication.getImage() != null){
+            Image img = new Image(publication.getFile().getOriginalFilename(),
                               publication.getFile().getContentType(),
                               imageService.compressBytes(publication.getFile().getBytes()));
-        
-        //System.out.println("IMAGEN CONVERTIDA ---------"+img);
-        
-        publication.setImage(img);
-        
+                 
+            publication.setImage(img);
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(publicationService.create(publication));
     }
     

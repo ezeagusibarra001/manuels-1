@@ -34,6 +34,20 @@ public class PaymentController {
     @PostMapping
     public ResponseEntity<Payment> create(@RequestBody Payment payment){
         
+<<<<<<< HEAD
+<<<<<<< HEAD
+        Image img = new Image(payment.getFile().getOriginalFilename(),
+                              payment.getFile().getContentType(),
+                              imageService.compressBytes(payment.getFile().getBytes()));
+        
+        payment.setImage(img);
+        
+        payment.setDate(LocalDate.now());
+        payment.setPayment(Boolean.FALSE);
+        
+=======
+=======
+>>>>>>> parent of 95a6d86 (Revert "Revert "payment, email, and others"")
         if(payment.getImage() != null){
             
            Image image = imageService.create(payment.getImage());
@@ -45,6 +59,10 @@ public class PaymentController {
         }else{
             throw new Error("Tenes que ingresar el comprobante");
         }
+<<<<<<< HEAD
+>>>>>>> parent of f2cd3a8 (payment, email, and others)
+=======
+>>>>>>> parent of 95a6d86 (Revert "Revert "payment, email, and others"")
         return ResponseEntity.status(HttpStatus.CREATED).body(paymentService.create(payment));
     }
     
